@@ -1,0 +1,173 @@
+{
+  "brightness": {
+    "corruption": "brightness",
+    "acc_s1": 0.573,
+    "acc_s2": 0.5344,
+    "acc_s3": 0.4821,
+    "acc_s4": 0.4134,
+    "acc_s5": 0.2807,
+    "acc_mean_1_5": 0.45671999999999996
+  },
+  "contrast": {
+    "corruption": "contrast",
+    "acc_s1": 0.5906,
+    "acc_s2": 0.5137,
+    "acc_s3": 0.45,
+    "acc_s4": 0.354,
+    "acc_s5": 0.1664,
+    "acc_mean_1_5": 0.41494
+  },
+  "defocus_blur": {
+    "corruption": "defocus_blur",
+    "acc_s1": 0.5831,
+    "acc_s2": 0.5533,
+    "acc_s3": 0.5136,
+    "acc_s4": 0.4603,
+    "acc_s5": 0.3542,
+    "acc_mean_1_5": 0.4929
+  },
+  "elastic_transform": {
+    "corruption": "elastic_transform",
+    "acc_s1": 0.5072,
+    "acc_s2": 0.5128,
+    "acc_s3": 0.4784,
+    "acc_s4": 0.3824,
+    "acc_s5": 0.3032,
+    "acc_mean_1_5": 0.4368
+  },
+  "fog": {
+    "corruption": "fog",
+    "acc_s1": 0.6036,
+    "acc_s2": 0.5644,
+    "acc_s3": 0.4968,
+    "acc_s4": 0.4056,
+    "acc_s5": 0.2268,
+    "acc_mean_1_5": 0.45944
+  },
+  "frost": {
+    "corruption": "frost",
+    "acc_s1": 0.4614,
+    "acc_s2": 0.3359,
+    "acc_s3": 0.2528,
+    "acc_s4": 0.2669,
+    "acc_s5": 0.228,
+    "acc_mean_1_5": 0.30900000000000005
+  },
+  "gaussian_blur": {
+    "corruption": "gaussian_blur",
+    "acc_s1": 0.5825,
+    "acc_s2": 0.5116,
+    "acc_s3": 0.466,
+    "acc_s4": 0.4171,
+    "acc_s5": 0.3159,
+    "acc_mean_1_5": 0.45861999999999997
+  },
+  "gaussian_noise": {
+    "corruption": "gaussian_noise",
+    "acc_s1": 0.3785,
+    "acc_s2": 0.2591,
+    "acc_s3": 0.1745,
+    "acc_s4": 0.1488,
+    "acc_s5": 0.1256,
+    "acc_mean_1_5": 0.21729999999999997
+  },
+  "glass_blur": {
+    "corruption": "glass_blur",
+    "acc_s1": 0.2567,
+    "acc_s2": 0.2543,
+    "acc_s3": 0.2506,
+    "acc_s4": 0.1809,
+    "acc_s5": 0.1849,
+    "acc_mean_1_5": 0.22548000000000004
+  },
+  "impulse_noise": {
+    "corruption": "impulse_noise",
+    "acc_s1": 0.4091,
+    "acc_s2": 0.3056,
+    "acc_s3": 0.2355,
+    "acc_s4": 0.1527,
+    "acc_s5": 0.0996,
+    "acc_mean_1_5": 0.2405
+  },
+  "jpeg_compression": {
+    "corruption": "jpeg_compression",
+    "acc_s1": 0.4826,
+    "acc_s2": 0.4381,
+    "acc_s3": 0.4223,
+    "acc_s4": 0.3982,
+    "acc_s5": 0.3744,
+    "acc_mean_1_5": 0.42312000000000005
+  },
+  "motion_blur": {
+    "corruption": "motion_blur",
+    "acc_s1": 0.5156,
+    "acc_s2": 0.4567,
+    "acc_s3": 0.3933,
+    "acc_s4": 0.3941,
+    "acc_s5": 0.3287,
+    "acc_mean_1_5": 0.41768
+  },
+  "pixelate": {
+    "corruption": "pixelate",
+    "acc_s1": 0.5328,
+    "acc_s2": 0.468,
+    "acc_s3": 0.444,
+    "acc_s4": 0.3011,
+    "acc_s5": 0.1803,
+    "acc_mean_1_5": 0.38523999999999997
+  },
+  "saturate": {
+    "corruption": "saturate",
+    "acc_s1": 0.4221,
+    "acc_s2": 0.3305,
+    "acc_s3": 0.5559,
+    "acc_s4": 0.4794,
+    "acc_s5": 0.3957,
+    "acc_mean_1_5": 0.43672000000000005
+  },
+  "shot_noise": {
+    "corruption": "shot_noise",
+    "acc_s1": 0.4494,
+    "acc_s2": 0.3651,
+    "acc_s3": 0.2343,
+    "acc_s4": 0.1947,
+    "acc_s5": 0.1425,
+    "acc_mean_1_5": 0.2772
+  },
+  "snow": {
+    "corruption": "snow",
+    "acc_s1": 0.5208,
+    "acc_s2": 0.4063,
+    "acc_s3": 0.3945,
+    "acc_s4": 0.3186,
+    "acc_s5": 0.256,
+    "acc_mean_1_5": 0.37924
+  },
+  "spatter": {
+    "corruption": "spatter",
+    "acc_s1": 0.5587,
+    "acc_s2": 0.5018,
+    "acc_s3": 0.4341,
+    "acc_s4": 0.4954,
+    "acc_s5": 0.4328,
+    "acc_mean_1_5": 0.48456
+  },
+  "speckle_noise": {
+    "corruption": "speckle_noise",
+    "acc_s1": 0.4525,
+    "acc_s2": 0.3398,
+    "acc_s3": 0.2923,
+    "acc_s4": 0.2161,
+    "acc_s5": 0.1586,
+    "acc_mean_1_5": 0.29186
+  },
+  "zoom_blur": {
+    "corruption": "zoom_blur",
+    "acc_s1": 0.4981,
+    "acc_s2": 0.4865,
+    "acc_s3": 0.4577,
+    "acc_s4": 0.4383,
+    "acc_s5": 0.4001,
+    "acc_mean_1_5": 0.45614
+  }
+}

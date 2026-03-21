@@ -1,0 +1,5 @@
+{
+  "MobileNetV3Small": 0.9044,
+  "EfficientNetB0": 0.9461,
+  "MCUNet_Official": 0.7888
+}
