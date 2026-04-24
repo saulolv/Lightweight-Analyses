@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Datasets and archives (download locally; do not version)
+datasets/
+*.tar
+*.tar.gz
+*.zip
+
+# Vendored repos (use submodule or clone in README)
+third_party/mcunet-official/
+
+# Model weights and exports (reproducible from training / scripts)
+checkpoints/
+keras_models/
+tflite_models/
+saved_models/
+exports/wakevision/images_png/
+exports/cifar10/
+exports/cifar100/
+exports/**/*.npz
+exports/**/tflite_models/
+
+# Large export image dumps (selective)
+exports/cifar10/images_png/
+exports/cifar100/images_png/
+
+# Build / IDE (do not commit Android Studio metadata)
+**/.idea/
+*.iml
+.gradle/
+App/**/build/
+App/**/local.properties
+
+# Artifacts
+*.h5
+*.pth
+*.pkl
+!**/README*
+
+# Android app: do not commit embedded exports or TFLite blobs (copy at build time if needed)
+App/**/assets/*.tflite
+App/**/assets/export_*/
+App/**/assets/**/images_png/

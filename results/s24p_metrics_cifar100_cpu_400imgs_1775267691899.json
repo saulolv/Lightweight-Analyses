@@ -1,0 +1,116 @@
+{
+  "timestamp": 1775267691899,
+  "models": [
+    {
+      "datasetId": "cifar100",
+      "datasetName": "CIFAR-100",
+      "modelName": "EfficientNetB0_CIFAR100",
+      "modelFile": "EfficientNetB0_CIFAR100.tflite",
+      "modelSizeBytes": 16553444,
+      "csvFile": "export_cifar100\/labels.csv",
+      "imagesProcessed": 400,
+      "imagesFailedToLoad": 0,
+      "labelsMatchedForAccuracy": 400,
+      "accuracy": 0.82,
+      "avgLatencyMs": 16.303563795000002,
+      "minLatencyMs": 13.134727,
+      "maxLatencyMs": 17.769023,
+      "medianLatencyMs": 16.902519499999997,
+      "p90LatencyMs": 17.041120499999998,
+      "latencyStdMs": 1.0218479378554537,
+      "throughputImagesPerSecond": 47.078422304310244,
+      "totalTimeMs": 8496.461445,
+      "warmupRunsUsed": 10,
+      "inputShape": [
+        1,
+        160,
+        160,
+        3
+      ],
+      "outputShape": [
+        1,
+        100
+      ],
+      "memoryUsageBeforeBytes": 55943072,
+      "memoryUsageAfterBytes": 64266144,
+      "processCpuTimeDeltaMs": 14663,
+      "useHardwareAcceleration": false,
+      "effectiveDelegate": "CPU",
+      "evalStatus": "ok"
+    },
+    {
+      "datasetId": "cifar100",
+      "datasetName": "CIFAR-100",
+      "modelName": "MCUNet_CIFAR100",
+      "modelFile": "MCUNet_CIFAR100.tflite",
+      "modelSizeBytes": 5763400,
+      "csvFile": "export_cifar100\/labels.csv",
+      "imagesProcessed": 400,
+      "imagesFailedToLoad": 0,
+      "labelsMatchedForAccuracy": 400,
+      "accuracy": 0.5325,
+      "avgLatencyMs": 7.121465442499997,
+      "minLatencyMs": 6.046875,
+      "maxLatencyMs": 8.219805,
+      "medianLatencyMs": 7.823555,
+      "p90LatencyMs": 7.933992,
+      "latencyStdMs": 0.8692109536416424,
+      "throughputImagesPerSecond": 85.43567245586289,
+      "totalTimeMs": 4681.885078,
+      "warmupRunsUsed": 10,
+      "inputShape": [
+        1,
+        160,
+        160,
+        3
+      ],
+      "outputShape": [
+        1,
+        100
+      ],
+      "memoryUsageBeforeBytes": 82321312,
+      "memoryUsageAfterBytes": 51580832,
+      "processCpuTimeDeltaMs": 8561,
+      "useHardwareAcceleration": false,
+      "effectiveDelegate": "CPU",
+      "evalStatus": "ok"
+    },
+    {
+      "datasetId": "cifar100",
+      "datasetName": "CIFAR-100",
+      "modelName": "MobileNetV3Small_CIFAR100",
+      "modelFile": "MobileNetV3Small_CIFAR100.tflite",
+      "modelSizeBytes": 3961488,
+      "csvFile": "export_cifar100\/labels.csv",
+      "imagesProcessed": 400,
+      "imagesFailedToLoad": 0,
+      "labelsMatchedForAccuracy": 400,
+      "accuracy": 0.7575,
+      "avgLatencyMs": 1.860038377500001,
+      "minLatencyMs": 1.451328,
+      "maxLatencyMs": 4.4225,
+      "medianLatencyMs": 1.9785935000000001,
+      "p90LatencyMs": 2.0513087,
+      "latencyStdMs": 0.3024313944631781,
+      "throughputImagesPerSecond": 152.26122789834682,
+      "totalTimeMs": 2627.064063,
+      "warmupRunsUsed": 10,
+      "inputShape": [
+        1,
+        160,
+        160,
+        3
+      ],
+      "outputShape": [
+        1,
+        100
+      ],
+      "memoryUsageBeforeBytes": 29978528,
+      "memoryUsageAfterBytes": 36818848,
+      "processCpuTimeDeltaMs": 4795,
+      "useHardwareAcceleration": false,
+      "effectiveDelegate": "CPU",
+      "evalStatus": "ok"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "timestamp": 1775267738764,
+  "models": [
+    {
+      "datasetId": "wakevision",
+      "datasetName": "WakeVision",
+      "modelName": "EfficientNetB0_wake_vision",
+      "modelFile": "EfficientNetB0_wake_vision.tflite",
+      "modelSizeBytes": 16079228,
+      "csvFile": "export_wakevision\/labels.csv",
+      "imagesProcessed": 400,
+      "imagesFailedToLoad": 0,
+      "labelsMatchedForAccuracy": 400,
+      "accuracy": 0.905,
+      "avgLatencyMs": 33.55712812749999,
+      "minLatencyMs": 24.773946,
+      "maxLatencyMs": 36.828086,
+      "medianLatencyMs": 32.105917500000004,
+      "p90LatencyMs": 36.11348829999999,
+      "latencyStdMs": 2.1806587435014526,
+      "throughputImagesPerSecond": 20.80427650743963,
+      "totalTimeMs": 19226.816172,
+      "warmupRunsUsed": 10,
+      "inputShape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "outputShape": [
+        1,
+        2
+      ],
+      "memoryUsageBeforeBytes": 38879136,
+      "memoryUsageAfterBytes": 73559968,
+      "processCpuTimeDeltaMs": 32145,
+      "useHardwareAcceleration": false,
+      "effectiveDelegate": "CPU",
+      "evalStatus": "ok"
+    },
+    {
+      "datasetId": "wakevision",
+      "datasetName": "WakeVision",
+      "modelName": "MCUNet_wake_vision",
+      "modelFile": "MCUNet_wake_vision.tflite",
+      "modelSizeBytes": 5660924,
+      "csvFile": "export_wakevision\/labels.csv",
+      "imagesProcessed": 400,
+      "imagesFailedToLoad": 0,
+      "labelsMatchedForAccuracy": 400,
+      "accuracy": 0.84,
+      "avgLatencyMs": 16.078679577499997,
+      "minLatencyMs": 11.644844,
+      "maxLatencyMs": 19.485938,
+      "medianLatencyMs": 16.983281,
+      "p90LatencyMs": 17.1813479,
+      "latencyStdMs": 2.020757246915262,
+      "throughputImagesPerSecond": 32.81265913242458,
+      "totalTimeMs": 12190.41707,
+      "warmupRunsUsed": 10,
+      "inputShape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "outputShape": [
+        1,
+        2
+      ],
+      "memoryUsageBeforeBytes": 17837984,
+      "memoryUsageAfterBytes": 39411616,
+      "processCpuTimeDeltaMs": 20975,
+      "useHardwareAcceleration": false,
+      "effectiveDelegate": "CPU",
+      "evalStatus": "ok"
+    },
+    {
+      "datasetId": "wakevision",
+      "datasetName": "WakeVision",
+      "modelName": "MobileNetV3Small_wake_vision",
+      "modelFile": "MobileNetV3Small_wake_vision.tflite",
+      "modelSizeBytes": 3765828,
+      "csvFile": "export_wakevision\/labels.csv",
+      "imagesProcessed": 400,
+      "imagesFailedToLoad": 0,
+      "labelsMatchedForAccuracy": 400,
+      "accuracy": 0.895,
+      "avgLatencyMs": 3.971122445000002,
+      "minLatencyMs": 3.831211,
+      "maxLatencyMs": 7.627969,
+      "medianLatencyMs": 3.901328,
+      "p90LatencyMs": 4.072613199999999,
+      "latencyStdMs": 0.29370928707921945,
+      "throughputImagesPerSecond": 53.51669714321487,
+      "totalTimeMs": 7474.302813,
+      "warmupRunsUsed": 10,
+      "inputShape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "outputShape": [
+        1,
+        2
+      ],
+      "memoryUsageBeforeBytes": 51724192,
+      "memoryUsageAfterBytes": 23101344,
+      "processCpuTimeDeltaMs": 12658,
+      "useHardwareAcceleration": false,
+      "effectiveDelegate": "CPU",
+      "evalStatus": "ok"
+    }
+  ]
+}
