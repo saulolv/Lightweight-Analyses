@@ -1,7 +1,7 @@
 {
   "dataset": "Wake Vision",
   "split": "test",
-  "note": "Results obtained from wake_vision_analyses.ipynb. EfficientNetB0 confirmed from saved notebook output (execution_count=14). MCUNet confirmed from local execution log (2026-03-12).",
+  "note": "Results obtained from wake_vision_analyses.ipynb. EfficientNetB0 confirmed from saved notebook output (execution_count=14). MCUNet confirmed from local execution log (2026-03-12). MobileNetV3-Small confirmed from local execution log (2026-04-24).",
   "models": {
     "EfficientNetB0": {
       "accuracy": 0.8772,
@@ -13,6 +13,16 @@
       },
       "source": "notebook output saved (execution_count=14)"
     },
+    "MobileNetV3Small": {
+      "accuracy": 0.8614,
+      "macro_f1": 0.8593,
+      "weighted_f1": 0.8593,
+      "per_class": {
+        "no_person": { "acc": 0.982, "f1": 0.876, "support": 27881 },
+        "person":    { "acc": 0.740, "f1": 0.842, "support": 27881 }
+      },
+      "source": "local execution log 2026-04-24"
+    },
     "MCUNet": {
       "accuracy": 0.8127,
       "macro_f1": 0.8085,
@@ -22,14 +32,6 @@
         "person":    { "acc": 0.665, "f1": 0.780, "support": 27881 }
       },
       "source": "local execution log 2026-03-12"
-    },
-    "MobileNetV3Small": {
-      "accuracy": 0.8613,
-      "macro_f1": null,
-      "weighted_f1": null,
-      "per_class": null,
-      "source": "local execution (notebook output not saved)",
-      "note": "Partial value confirmed. Per-class metrics pending."
     }
   }
 }
