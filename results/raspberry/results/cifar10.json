@@ -1,0 +1,96 @@
+{
+  "timestamp_utc": "2026-04-26T01:47:29Z",
+  "root": "/app",
+  "selected_datasets": [
+    "cifar10"
+  ],
+  "max_images": 400,
+  "warmups": 10,
+  "threads": null,
+  "results": [
+    {
+      "dataset": "cifar10",
+      "npz_file": "/app/exports/cifar10/cifar10_test_uint8.npz",
+      "models": [
+        {
+          "dataset": "cifar10",
+          "model": "mobilenetv3_small",
+          "model_file": "/app/tflite_models/MobileNetV3Small_CIFAR10.tflite",
+          "images_processed": 400,
+          "num_classes": 10,
+          "correct": 349,
+          "accuracy": 0.8725,
+          "latency_ms": {
+            "avg": 25.294861134995585,
+            "min": 24.939695000057327,
+            "median": 25.183991500057346,
+            "p90": 25.539434499842173,
+            "max": 34.122249999882115,
+            "std": 0.6571911262121887
+          },
+          "throughput_img_s": 34.10490987145124,
+          "total_time_ms": 11728.51655400018,
+          "memoryUsageBeforeBytes": 58118144,
+          "memoryUsageAfterBytes": 61468672,
+          "memoryUsageDeltaBytes": 3350528,
+          "peakMemoryUsageBeforeBytes": 57671680,
+          "peakMemoryUsageAfterBytes": 60997632,
+          "peakMemoryUsageDeltaBytes": 3325952
+        },
+        {
+          "dataset": "cifar10",
+          "model": "efficientnet_b0",
+          "model_file": "/app/tflite_models/EfficientNetB0_CIFAR10.tflite",
+          "images_processed": 400,
+          "num_classes": 10,
+          "correct": 378,
+          "accuracy": 0.945,
+          "latency_ms": {
+            "avg": 287.02572905750685,
+            "min": 278.79763700002513,
+            "median": 286.3088634999258,
+            "p90": 293.82723589999387,
+            "max": 306.5496249998887,
+            "std": 4.985051559341767
+          },
+          "throughput_img_s": 3.4348214041316436,
+          "total_time_ms": 116454.38086499985,
+          "memoryUsageBeforeBytes": 58281984,
+          "memoryUsageAfterBytes": 93376512,
+          "memoryUsageDeltaBytes": 35094528,
+          "peakMemoryUsageBeforeBytes": 61190144,
+          "peakMemoryUsageAfterBytes": 97210368,
+          "peakMemoryUsageDeltaBytes": 36020224
+        },
+        {
+          "dataset": "cifar10",
+          "model": "lcnn",
+          "model_file": "/app/tflite_models/MCUNet_CIFAR10.tflite",
+          "images_processed": 400,
+          "num_classes": 10,
+          "correct": 345,
+          "accuracy": 0.8625,
+          "latency_ms": {
+            "avg": 182.84502151749567,
+            "min": 180.39500299983047,
+            "median": 181.93943000005675,
+            "p90": 184.05101969990483,
+            "max": 233.32054000002245,
+            "std": 4.181334289792403
+          },
+          "throughput_img_s": 5.349777345407198,
+          "total_time_ms": 74769.46687200006,
+          "memoryUsageBeforeBytes": 59416576,
+          "memoryUsageAfterBytes": 64483328,
+          "memoryUsageDeltaBytes": 5066752,
+          "peakMemoryUsageBeforeBytes": 97210368,
+          "peakMemoryUsageAfterBytes": 97210368,
+          "peakMemoryUsageDeltaBytes": 0
+        }
+      ],
+      "num_images_total": 2000,
+      "num_images_eval": 400,
+      "num_classes": 10
+    }
+  ]
+}

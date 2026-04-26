@@ -1,0 +1,145 @@
+{
+  "timestamp_utc": "2026-03-29T20:57:49Z",
+  "root": "/home/saulo/Lightweight-Analyses",
+  "selected_datasets": [
+    "cifar10",
+    "cifar100"
+  ],
+  "max_images": 400,
+  "warmups": 10,
+  "threads": null,
+  "results": [
+    {
+      "dataset": "cifar10",
+      "npz_file": "/home/saulo/Lightweight-Analyses/exports/cifar10/cifar10_test_uint8.npz",
+      "models": [
+        {
+          "dataset": "cifar10",
+          "model": "mobilenetv3_small",
+          "model_file": "/home/saulo/Lightweight-Analyses/tflite_models/MobileNetV3Small_CIFAR10.tflite",
+          "images_processed": 400,
+          "num_classes": 10,
+          "correct": 349,
+          "accuracy": 0.8725,
+          "latency_ms": {
+            "avg": 25.06594580000097,
+            "min": 24.856128999999783,
+            "median": 25.012119999985316,
+            "p90": 25.27519040000925,
+            "max": 25.92650400004004,
+            "std": 0.16964483561494284
+          },
+          "throughput_img_s": 34.66696190831004,
+          "total_time_ms": 11538.36327099998
+        },
+        {
+          "dataset": "cifar10",
+          "model": "efficientnet_b0",
+          "model_file": "/home/saulo/Lightweight-Analyses/tflite_models/EfficientNetB0_CIFAR10.tflite",
+          "images_processed": 400,
+          "num_classes": 10,
+          "correct": 378,
+          "accuracy": 0.945,
+          "latency_ms": {
+            "avg": 286.02137943249744,
+            "min": 276.81513900006394,
+            "median": 285.042916000009,
+            "p90": 292.0347095999773,
+            "max": 307.37334400009786,
+            "std": 5.181433405122368
+          },
+          "throughput_img_s": 3.449152629501473,
+          "total_time_ms": 115970.513041
+        },
+        {
+          "dataset": "cifar10",
+          "model": "lcnn",
+          "model_file": "/home/saulo/Lightweight-Analyses/tflite_models/MCUNet_CIFAR10.tflite",
+          "images_processed": 400,
+          "num_classes": 10,
+          "correct": 345,
+          "accuracy": 0.8625,
+          "latency_ms": {
+            "avg": 181.2301718650016,
+            "min": 180.50945900006354,
+            "median": 181.0570709999979,
+            "p90": 182.0574179000232,
+            "max": 183.99918099999013,
+            "std": 0.5481234207594562
+          },
+          "throughput_img_s": 5.404211856224088,
+          "total_time_ms": 74016.34329700004
+        }
+      ],
+      "num_images_total": 2000,
+      "num_images_eval": 400,
+      "num_classes": 10
+    },
+    {
+      "dataset": "cifar100",
+      "npz_file": "/home/saulo/Lightweight-Analyses/exports/cifar100/cifar100_test_uint8.npz",
+      "models": [
+        {
+          "dataset": "cifar100",
+          "model": "mobilenetv3_small",
+          "model_file": "/home/saulo/Lightweight-Analyses/tflite_models/MobileNetV3Small_CIFAR100.tflite",
+          "images_processed": 400,
+          "num_classes": 100,
+          "correct": 288,
+          "accuracy": 0.72,
+          "latency_ms": {
+            "avg": 25.105900132499247,
+            "min": 24.87117099997249,
+            "median": 25.068724999982805,
+            "p90": 25.265236700067817,
+            "max": 25.87263800000983,
+            "std": 0.14066663068053867
+          },
+          "throughput_img_s": 34.60322109905593,
+          "total_time_ms": 11559.617494999999
+        },
+        {
+          "dataset": "cifar100",
+          "model": "efficientnet_b0",
+          "model_file": "/home/saulo/Lightweight-Analyses/tflite_models/EfficientNetB0_CIFAR100.tflite",
+          "images_processed": 400,
+          "num_classes": 100,
+          "correct": 327,
+          "accuracy": 0.8175,
+          "latency_ms": {
+            "avg": 287.52095056999735,
+            "min": 278.5300030000144,
+            "median": 286.46926099997927,
+            "p90": 293.4093845000348,
+            "max": 331.8822580000642,
+            "std": 5.888193215289952
+          },
+          "throughput_img_s": 3.4320557556442948,
+          "total_time_ms": 116548.223129
+        },
+        {
+          "dataset": "cifar100",
+          "model": "lcnn",
+          "model_file": "/home/saulo/Lightweight-Analyses/tflite_models/MCUNet_CIFAR100.tflite",
+          "images_processed": 400,
+          "num_classes": 100,
+          "correct": 207,
+          "accuracy": 0.5175,
+          "latency_ms": {
+            "avg": 181.3681914275017,
+            "min": 180.60459599996648,
+            "median": 181.15259600006084,
+            "p90": 182.42426449991171,
+            "max": 184.67765499997313,
+            "std": 0.6323777738455483
+          },
+          "throughput_img_s": 5.400598283683863,
+          "total_time_ms": 74065.86807400004
+        }
+      ],
+      "num_images_total": 2000,
+      "num_images_eval": 400,
+      "num_classes": 100
+    }
+  ]
+}

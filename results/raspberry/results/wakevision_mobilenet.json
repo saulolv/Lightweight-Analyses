@@ -1,0 +1,46 @@
+{
+  "timestamp_utc": "2026-04-26T02:12:38Z",
+  "root": "/app",
+  "selected_datasets": [
+    "wakevision"
+  ],
+  "max_images": 400,
+  "warmups": 10,
+  "threads": 1,
+  "results": [
+    {
+      "dataset": "wakevision",
+      "npz_file": "/app/wakevision_images",
+      "models": [
+        {
+          "dataset": "wakevision",
+          "model": "mobilenetv3_small",
+          "model_file": "/app/tflite_models/MobileNetV3Small_wake_vision.tflite",
+          "images_processed": 400,
+          "num_classes": 2,
+          "correct": 358,
+          "accuracy": 0.895,
+          "latency_ms": {
+            "avg": 50.718200062509595,
+            "min": 49.98647699994763,
+            "median": 50.522207500080185,
+            "p90": 51.024720699751924,
+            "max": 67.49318600031984,
+            "std": 1.2276494851216144
+          },
+          "throughput_img_s": 8.687324754258604,
+          "total_time_ms": 46044.09427700011,
+          "memoryUsageBeforeBytes": 48181248,
+          "memoryUsageAfterBytes": 64675840,
+          "memoryUsageDeltaBytes": 16494592,
+          "peakMemoryUsageBeforeBytes": 47775744,
+          "peakMemoryUsageAfterBytes": 65839104,
+          "peakMemoryUsageDeltaBytes": 18063360
+        }
+      ],
+      "num_images_total": 400,
+      "num_images_eval": 400,
+      "num_classes": 2
+    }
+  ]
+}
