@@ -35,9 +35,9 @@ Third Author\inst{3}\orcidID{2222--3333-4444-5555}}
 \institute{
 Princeton University, Princeton NJ 08544, USA \and
 Springer Heidelberg, Tiergartenstr. 17, 69121 Heidelberg, Germany
-\email{lncs@springer.com}\\\\
+\email{lncs@springer.com}\\
 \url{http://www.springer.com/gp/computer-science/lncs} \and
-ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\\\
+ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
 \email{\{abc,lncs\}@uni-heidelberg.de}
 }
 
@@ -162,8 +162,8 @@ Label smoothing         & $\varepsilon = 0.1$ \\
 Early stopping          & Patience 8, monitors val.\ accuracy \\
 LR reduction on plateau & Patience 3, monitors val.\ accuracy \\
 Data augmentation       & None (\texttt{USE\_AUGMENTATION = False}) \\
-Fine-tune ratio         & Top 20\% of backbone layers frozen; \\
-                        & BatchNorm layers kept in inference mode \\
+Fine-tune ratio         & Bottom 20\% of backbone layers frozen; \\
+                        & top 80\% unfrozen; BatchNorm in inference mode \\
 Model selection         & Best validation accuracy
                           (\texttt{ModelCheckpoint}) \\
 Export precision        & float32, no quantization \\
@@ -238,10 +238,12 @@ relative to a fixed external reference such as AlexNet, our study adopts an
 internal baseline among the evaluated
 architectures~\cite{hendrycks2019benchmarking}. We use MCUNet as the reference
 model because it consistently yielded the highest clean error across the
-considered datasets in our experiments. This choice provides a conservative
-and interpretable normalization within the comparative setting: values below
-100 indicate better corruption performance than the internal baseline, whereas
-MCUNet is fixed at 100 by definition.
+considered datasets in our experiments. As verified in
+Section~\ref{sec:results}, MCUNet consistently yielded the highest clean error
+across all datasets (see Table~\ref{tab:robustness_summary}). This choice
+provides a conservative and interpretable normalization within the comparative
+setting: values below 100 indicate better corruption performance than the
+internal baseline, whereas MCUNet is fixed at 100 by definition.
 
 \subsection{On-device Benchmarking}
 
