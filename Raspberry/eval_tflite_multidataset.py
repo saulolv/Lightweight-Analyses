@@ -75,6 +75,13 @@ DATASET_SPECS = {
 DEFAULT_DATASETS = ["cifar10", "cifar100", "wakevision"]
 DEFAULT_MAX_IMAGES = 400
 DEFAULT_WARMUP_RUNS = 10
+# Single-thread default matches the paper's CPU-only deployment claim.
+# Multi-threaded TFLite on low-power ARM boards (Cortex-A53) incurs
+# synchronization overhead that can negate parallelism gains; using 1 thread
+# also places the Pi Zero 2 W in the same operating regime as single-core
+# embedded processors (e.g., Cortex-M4/M7), making it a conservative proxy
+# for the most resource-constrained tier of edge deployment.
+DEFAULT_NUM_THREADS = 1
 
 
 def _read_proc_rss_bytes() -> int | None:
@@ -455,7 +462,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--max-images", type=int, default=DEFAULT_MAX_IMAGES, help="Max images per dataset (balanced).")
     parser.add_argument("--warmups", type=int, default=DEFAULT_WARMUP_RUNS, help="Warmup runs per model.")
-    parser.add_argument("--threads", type=int, default=None, help="Interpreter threads when supported.")
+    parser.add_argument(
+        "--threads",
+        type=int,
+        default=DEFAULT_NUM_THREADS,
+        help=(
+            "Number of TFLite interpreter threads (default: 1). "
+            "The reported results in the paper were obtained with --threads 1, "
+            "which places the Pi Zero 2 W in the same single-core regime as "
+            "Cortex-M class embedded processors."
+        ),
+    )
     parser.add_argument("--output", default="results_multidataset.json", help="Output report JSON path.")
     return parser.parse_args()
 
