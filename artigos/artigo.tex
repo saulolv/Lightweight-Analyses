@@ -1,7 +1,3 @@
-% This is samplepaper.tex, a sample chapter demonstrating the
-% LLNCS macro package for Springer Computer Science proceedings;
-% Version 2.21 of 2022/01/12
-
 \documentclass[runningheads]{llncs}
 
 \usepackage[T1]{fontenc}
@@ -39,19 +35,18 @@ Third Author\inst{3}\orcidID{2222--3333-4444-5555}}
 \institute{
 Princeton University, Princeton NJ 08544, USA \and
 Springer Heidelberg, Tiergartenstr. 17, 69121 Heidelberg, Germany
-\email{lncs@springer.com}\\
+\email{lncs@springer.com}\\\\
 \url{http://www.springer.com/gp/computer-science/lncs} \and
-ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
+ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\\\
 \email{\{abc,lncs\}@uni-heidelberg.de}
 }
 
 \maketitle
 
 \begin{abstract}
-Selecting lightweight convolutional neural networks for edge vision based only on clean accuracy can lead to suboptimal deployment decisions, since practical performance also depends on robustness to image corruptions, latency, throughput, and model size. This paper presents a comparative evaluation of MCUNet, MobileNetV3-Small, and EfficientNet-B0 across three benchmarks with distinct characteristics: CIFAR-10, CIFAR-100, and Wake Vision person detection. We assess robustness using corruption benchmarks derived from the CIFAR-C protocol, comprising 15 corruption types at five severity levels, and we measure deployment efficiency with float32 TensorFlow Lite CPU-only inference on a Samsung Galaxy A14, a Samsung Galaxy S24+, and a Raspberry Pi Zero 2 W. The analysis reports clean accuracy, mean Corruption Error (mCE), relative mCE, P90 latency, throughput, model footprint, and Friedman/Nemenyi statistical comparisons. Across the CIFAR benchmarks, EfficientNet-B0 achieves the highest clean accuracy and the lowest absolute mCE, whereas MobileNetV3-Small consistently provides the lowest latency and the smallest deployment footprint on all evaluated devices. On Wake Vision, MobileNetV3-Small also yields the best relative robustness, while MCUNet does not surpass the other models in the final float32 TensorFlow Lite deployment setting. Overall, the results indicate that edge-model selection should be guided by joint robustness--efficiency evidence rather than clean accuracy alone.
+Selecting lightweight convolutional neural networks for edge vision based only on clean accuracy can lead to suboptimal deployment decisions, since practical performance also depends on robustness to image corruptions, latency, throughput, and model size. This paper presents a comparative evaluation of MCUNet, MobileNetV3-Small, and EfficientNet-B0 across three benchmarks with distinct characteristics: CIFAR-10, CIFAR-100, and Wake Vision person detection. We assess robustness using corruption benchmarks derived from the CIFAR-C protocol, comprising 15 corruption types at five severity levels, and we measure deployment efficiency with float32 TensorFlow Lite CPU-only inference on a Samsung Galaxy A14, a Samsung Galaxy S24+, and a Raspberry Pi Zero 2 W. The analysis reports clean accuracy, mean Corruption Error (mCE), relative mCE, P90 latency, throughput, model footprint, memory usage, and Friedman/Nemenyi statistical comparisons. Across the CIFAR benchmarks, EfficientNet-B0 achieves the highest clean accuracy and the lowest absolute mCE, whereas MobileNetV3-Small consistently provides the lowest latency and the smallest deployment footprint on all evaluated devices. On Wake Vision, MobileNetV3-Small also yields the best relative robustness, while MCUNet does not surpass the other models in the final float32 TensorFlow Lite deployment setting. Overall, the results indicate that edge-model selection should be guided by joint robustness--efficiency evidence rather than clean accuracy alone.
 \keywords{Edge vision \and Lightweight CNNs \and Robustness \and TensorFlow Lite \and TinyML}
 \end{abstract}
-
 
 \section{Introduction}
 
@@ -66,14 +61,13 @@ In this paper, we conduct a comparative evaluation of three representative light
 The main contributions of this paper are as follows:
 \begin{enumerate}
     \item We provide a unified cross-benchmark comparison of three lightweight CNN architectures over CIFAR-10, CIFAR-100, and Wake Vision, combining clean accuracy, corruption robustness, and on-device performance.
-    \item We report deployment-oriented efficiency metrics under a common float32 TensorFlow Lite CPU-only setup, including P90 latency, throughput, and model footprint across heterogeneous edge devices.
+    \item We report deployment-oriented efficiency metrics under a common float32 TensorFlow Lite CPU-only setup, including P90 latency, throughput, memory usage, and model footprint across heterogeneous edge devices.
     \item We analyze whether the observed differences are consistent by applying Friedman and Nemenyi statistical tests to robustness and device-level performance measurements.
 \end{enumerate}
 
 Our results show a clear trade-off between robustness and efficiency. EfficientNet-B0 achieves the strongest clean accuracy and absolute corruption robustness, while MobileNetV3-Small consistently offers the best runtime efficiency and the smallest deployment footprint. These findings suggest that edge-model selection should be treated as a multi-objective decision problem rather than as a ranking based solely on clean accuracy.
 
 The remainder of this paper is organized as follows. Section~\ref{sec:related} reviews the related literature. Section~\ref{sec:method} describes the methodology and experimental setup. Section~\ref{sec:results} presents the empirical results. Section~\ref{sec:conclusion} concludes the paper and outlines directions for future work.
-
 
 \section{Related Work}
 \label{sec:related}
@@ -85,118 +79,216 @@ Wake Vision extends this discussion to TinyML person detection by providing a la
 
 Finally, methodology matters. Fine-tuning choices can significantly alter the robustness inherited from pretraining~\cite{hwang2024pretraining}, while deployment performance is heavily shaped by runtime implementations such as TensorFlow Lite and XNNPACK~\cite{tensorflowlite,dukhan2021xnnpack}. Yet few studies jointly compare lightweight architectures under common corruptions, device-level measurements, and formal statistical tests over multiple datasets. This is the gap our work addresses.
 
-
-
 \section{Methodology}
 \label{sec:method}
-
 \subsection{Experimental Pipeline}
-Our experimental workflow comprised four stages: (i) supervised training and checkpoint selection, (ii) corruption-based robustness evaluation and aggregation of robustness metrics, (iii) TensorFlow Lite export, and (iv) on-device benchmarking on Android smartphones and Raspberry Pi. Training and analysis were conducted with TensorFlow/Keras notebooks, smartphone benchmarking was implemented in a Kotlin/Jetpack Compose Android application, and Raspberry Pi evaluation was executed with a Python-based inference script.
+Our experimental workflow comprised four stages: (i) supervised training and
+checkpoint selection, (ii) corruption-based robustness evaluation and
+aggregation of robustness metrics, (iii) TensorFlow Lite export, and (iv)
+on-device benchmarking on Android smartphones and Raspberry Pi. Training and
+analysis were conducted with TensorFlow/Keras notebooks, smartphone
+benchmarking was implemented in a Kotlin/Jetpack Compose Android application,
+and Raspberry Pi evaluation was executed with a Python-based inference script.
+For double-blind review, the complete reproducibility package is available in
+an anonymous repository.
 
 \subsection{Datasets and Corruption Protocol}
 We selected three datasets that represent complementary edge-vision scenarios.
 \begin{itemize}
-    \item \textbf{CIFAR-10}~\cite{krizhevsky2009cifar}: 10 natural-image classes. Inputs were resized to $160\times160$, and the last 5,000 training images were reserved for validation.
-    \item \textbf{CIFAR-100}~\cite{krizhevsky2009cifar}: 100 classes with higher inter-class difficulty than CIFAR-10. The same $160\times160$ preprocessing and validation split were adopted.
-    \item \textbf{Wake Vision}~\cite{banbury2024wakevision}: binary person-versus-no-person classification. We used the official \texttt{train\_quality}, \texttt{validation}, and \texttt{test} splits provided through \texttt{tensorflow\_datasets}, resized inputs to $224\times224$, and excluded ambiguous \texttt{person == -1} samples from the test split during standard evaluation.
+    \item \textbf{CIFAR-10}~\cite{krizhevsky2009cifar}: 10 natural-image
+    classes. Inputs were resized to $160\times160$, and the last 5,000
+    training images were reserved for validation.
+
+    \item \textbf{CIFAR-100}~\cite{krizhevsky2009cifar}: 100 classes with
+    higher inter-class difficulty than CIFAR-10. The same $160\times160$
+    preprocessing and validation split were adopted.
+
+    \item \textbf{Wake Vision}~\cite{banbury2024wakevision}: binary
+    person-versus-no-person classification. We used the official
+    \texttt{train\_quality}, \texttt{validation}, and \texttt{test} splits
+    provided through \texttt{tensorflow\_datasets}, resized inputs to
+    $224\times224$, and excluded ambiguous \texttt{person == -1} samples from
+    the test split during standard evaluation.
 \end{itemize}
 
-To assess robustness, we followed the common-corruption evaluation rationale of Hendrycks and Dietterich and considered the 15 corruption types used in the CIFAR-C family, each evaluated at five severity levels~\cite{hendrycks2019benchmarking}. This results in 75 corrupted conditions per dataset. For CIFAR-10 and CIFAR-100, we reused the corruption outputs already available in the repository. For Wake Vision, we generated a matched corruption benchmark by applying the same corruption family and severity structure to the clean test split. This design supports a unified comparison across multi-class image classification and binary TinyML-oriented person detection under the same corruption taxonomy.
+To assess robustness, we followed the common-corruption evaluation rationale
+of Hendrycks and Dietterich and considered the 15 corruption types used in the
+CIFAR-C family, each evaluated at five severity
+levels~\cite{hendrycks2019benchmarking}. This results in 75 corrupted
+conditions per dataset. For CIFAR-10 and CIFAR-100, we reused the corruption
+outputs already available in the repository. For Wake Vision, we generated a
+matched corruption benchmark by applying the same 15 common corruption types at
+five severity levels to the clean test split, using the
+\texttt{imagecorruptions} library~\cite{michaelis2019imagecorruptions}. Unlike
+the CIFAR-C datasets, which are distributed as pre-generated \texttt{.npy}
+arrays, corruptions were applied on-the-fly per image and immediately
+discarded, since pre-generating all 75 corrupted conditions for approximately
+55{,}762 images at $224\times224$ would require approximately 780\,GB of
+storage.
 
 \subsection{Architectures and Training Strategy}
-We compared three lightweight convolutional architectures with distinct design goals:
-\begin{itemize}
-    \item \textbf{MobileNetV3-Small}: an ImageNet-pretrained mobile-oriented backbone followed by a task-specific classification head.
-    \item \textbf{EfficientNet-B0}: an ImageNet-pretrained backbone based on compound scaling, also adapted with a task-specific classification head.
-    \item \textbf{MCUNet}: the official ImageNet-pretrained MCUNet variant available in the repository, converted from the original PyTorch implementation to Keras before dataset-specific fine-tuning.
-\end{itemize}
 
-All models were trained in two stages. In the first stage, only the classification head was optimized while the backbone remained frozen. In the second stage, the final 20\% of backbone layers were unfrozen whenever the architecture exposed a separable backbone for fine-tuning. The same optimizer family, callback strategy, and export precision were maintained across models in order to preserve a comparable training and deployment setting.
+We compared three lightweight convolutional architectures with distinct design
+goals: \textbf{MobileNetV3-Small}, a mobile-oriented backbone scaled for
+efficiency; \textbf{EfficientNet-B0}, a compound-scaled backbone balancing
+accuracy and parameter count; and \textbf{MCUNet}, originally designed for
+microcontroller deployment, converted from PyTorch to Keras prior to
+fine-tuning. All three were initialized from ImageNet-pretrained weights and
+adapted with a task-specific classification head.
 
-Input preprocessing followed the conventions of each backbone. MobileNetV3-Small used the standard Keras rescaling to $[-1,1]$, EfficientNet-B0 used its ImageNet-compatible preprocessing path, and MCUNet used explicit ImageNet normalization after conversion, given by $(x/255 - \mu)/\sigma$. All exported deployment models were kept in float32 format, without quantization.
+To ensure that observed differences reflect architectural properties rather
+than pipeline variation, all models were trained under a strictly shared
+protocol implemented in a single function
+(\texttt{train\_head\_and\_finetune}). Table~\ref{tab:training_protocol}
+summarizes the shared hyperparameters and the architecture-specific
+preprocessing conventions.
 
-\begin{table}[H]
-\caption{Target devices used in the on-device benchmark.}
-\label{tab:hardware}
+\begin{table}[ht]
 \centering
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{p{3.4cm}p{2.8cm}p{2.7cm}p{4.2cm}}
+\caption{Shared training protocol and per-architecture preprocessing.}
+\label{tab:training_protocol}
+\begin{tabular}{ll}
 \toprule
-Device & Tier / role & Runtime & Notes \\
+\textbf{Hyperparameter / Setting} & \textbf{Value} \\
 \midrule
-Samsung Galaxy A14 & Commodity Android phone & TensorFlow Lite Interpreter & CPU-only inference, up to 4 threads, 400-image balanced subset per dataset \\
-Samsung Galaxy S24+ & Flagship Android phone & TensorFlow Lite Interpreter & CPU-only inference, up to 4 threads, same benchmark protocol \\
-Raspberry Pi Zero 2 W & Low-cost SBC / field node & \texttt{tflite\_runtime} (fallback to \texttt{tf.lite}) & CPU-only inference on the same balanced subsets \\
+\multicolumn{2}{l}{\textit{Shared across all architectures}} \\
+\midrule
+Input resolution        & $160\times160$ (CIFAR-10/100);
+                          $224\times224$ (Wake Vision) \\
+Optimizer               & AdamW ($\lambda=10^{-4}$), Adam as fallback \\
+Head learning rate      & $10^{-3}$ \\
+Fine-tune learning rate & $10^{-5}$ \\
+Label smoothing         & $\varepsilon = 0.1$ \\
+Early stopping          & Patience 8, monitors val.\ accuracy \\
+LR reduction on plateau & Patience 3, monitors val.\ accuracy \\
+Data augmentation       & None (\texttt{USE\_AUGMENTATION = False}) \\
+Fine-tune ratio         & Top 20\% of backbone layers frozen; \\
+                        & BatchNorm layers kept in inference mode \\
+Model selection         & Best validation accuracy
+                          (\texttt{ModelCheckpoint}) \\
+Export precision        & float32, no quantization \\
+\midrule
+\multicolumn{2}{l}{\textit{Per-architecture preprocessing}} \\
+\midrule
+MobileNetV3-Small & Keras rescaling to $[-1, 1]$ \\
+EfficientNet-B0   & ImageNet-compatible preprocessing (Keras built-in) \\
+MCUNet            & Explicit ImageNet normalization:
+                    $(x/255 - \mu)/\sigma$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[H]
-\caption{Training configuration shared across datasets unless stated otherwise.}
-\label{tab:training}
-\centering
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{p{5.0cm}p{6.1cm}}
-\toprule
-Parameter & Value \\
-\midrule
-Input resolution & CIFAR-10/CIFAR-100: $160\times160$; Wake Vision: $224\times224$ \\
-Batch size & 64 \\
-Head / fine-tuning epochs & 40 / 20 \\
-Head / fine-tuning learning rate & $10^{-3}$ / $10^{-5}$ \\
-Optimizer & AdamW when available, Adam fallback \\
-Weight decay & $10^{-4}$ \\
-Label smoothing & 0.1 \\
-Backbone fine-tuning ratio & Last 20\% of layers when backbone decomposition is available \\
-Callbacks & EarlyStopping (patience 8), ReduceLROnPlateau (patience 3, factor 0.5), ModelCheckpoint \\
-Data augmentation & Disabled in the final reported runs \\
-TFLite export & float32 conversion without quantization \\
-\bottomrule
-\end{tabular}
-\end{table}
+Training proceeded in two stages. In the first stage, only the classification
+head was optimized with the backbone fully frozen. In the second stage, the
+final 80\% of backbone layers were unfrozen whenever the architecture exposed
+a separable backbone, while all \texttt{BatchNormalization} layers remained in
+inference mode throughout. The complete training code is available in the
+anonymous repository.
+
+Each model was trained with a single fixed random seed (\texttt{seed\,=\,42}),
+set via \texttt{tf.keras.utils.set\_random\_seed} prior to data loading and
+model construction. No repeated training runs were performed; consequently,
+the reported accuracy and robustness figures reflect a single-seed outcome per
+architecture and dataset. Variance across seeds is therefore not estimated in
+this study. The Friedman and Nemenyi statistical tests described in
+Section~\ref{sec:method} are applied over the 45 dataset--corruption blocks
+(three datasets $\times$ 15 corruption types), not over training repetitions;
+their purpose is to assess whether the observed \emph{ranking} of models is
+consistent across corruption conditions rather than across independent training
+runs.
 
 \subsection{Robustness Metrics}
-Let $Acc_{m,c,s}$ denote the accuracy of model $m$ under corruption type $c$ at severity level $s$, and let $E_{m,c,s}=1-Acc_{m,c,s}$ denote the corresponding error. Following the corruption-error framework introduced by Hendrycks and Dietterich, corruption robustness is evaluated by aggregating errors across severity levels and normalizing them with respect to a reference model under the same corruption~\cite{hendrycks2019benchmarking}.
+Let $Acc_{m,c,s}$ denote the accuracy of model $m$ under corruption type $c$
+at severity level $s$, and let $E_{m,c,s}=1-Acc_{m,c,s}$ denote the
+corresponding error. Following the corruption-error framework introduced by
+Hendrycks and Dietterich, corruption robustness is evaluated by aggregating
+errors across severity levels and normalizing them with respect to a reference
+model under the same corruption~\cite{hendrycks2019benchmarking}.
 
-The corruption error of model $m$ relative to baseline model $b$ for corruption $c$ is defined as:
+The corruption error of model $m$ relative to baseline model $b$ for
+corruption $c$ is defined as:
 \begin{equation}
 CE_{m,c}^{(b)} =
 \frac{\sum_{s=1}^{5} E_{m,c,s}}
-{\sum_{s=1}^{5} E_{b,c,s}}.
+     {\sum_{s=1}^{5} E_{b,c,s}}.
 \end{equation}
 
-The mean Corruption Error (mCE) is the arithmetic mean over the full corruption set $C$:
+The mean Corruption Error (mCE) is the arithmetic mean over the full
+corruption set $C$:
 \begin{equation}
 mCE_{m}^{(b)} = \frac{1}{|C|}\sum_{c \in C} CE_{m,c}^{(b)}.
 \end{equation}
 
-In addition to mCE, we report a relative corruption measure that discounts the contribution of clean error, following the motivation of Relative CE in the original benchmark~\cite{hendrycks2019benchmarking}. Let $E_{m,\mathrm{clean}}$ denote the clean error of model $m$. We define:
+In addition to mCE, we report a relative corruption measure that discounts
+the contribution of clean error, following the motivation of Relative CE in
+the original benchmark~\cite{hendrycks2019benchmarking}. Let
+$E_{m,\mathrm{clean}}$ denote the clean error of model $m$. We define:
 \begin{equation}
 RCE_{m,c}^{(b)} =
 \frac{\sum_{s=1}^{5} E_{m,c,s} - E_{m,\mathrm{clean}}}
-{\sum_{s=1}^{5} E_{b,c,s} - E_{b,\mathrm{clean}}}
+     {\sum_{s=1}^{5} E_{b,c,s} - E_{b,\mathrm{clean}}}
 \end{equation}
 and compute relative mCE as
 \begin{equation}
 RmCE_{m}^{(b)} = \frac{1}{|C|}\sum_{c \in C} RCE_{m,c}^{(b)}.
 \end{equation}
 
-Unlike the canonical ImageNet-C protocol, which reports corruption error relative to a fixed external reference such as AlexNet, our study adopts an internal baseline among the evaluated architectures~\cite{hendrycks2019benchmarking}. We use MCUNet as the reference model because it consistently yielded the highest clean error across the considered datasets in our experiments. This choice provides a conservative and interpretable normalization within the comparative setting: values below 100 indicate better corruption performance than the internal baseline, whereas MCUNet is fixed at 100 by definition.
+Unlike the canonical ImageNet-C protocol, which reports corruption error
+relative to a fixed external reference such as AlexNet, our study adopts an
+internal baseline among the evaluated
+architectures~\cite{hendrycks2019benchmarking}. We use MCUNet as the reference
+model because it consistently yielded the highest clean error across the
+considered datasets in our experiments. This choice provides a conservative
+and interpretable normalization within the comparative setting: values below
+100 indicate better corruption performance than the internal baseline, whereas
+MCUNet is fixed at 100 by definition.
 
 \subsection{On-device Benchmarking}
-Deployment efficiency was evaluated under a unified CPU-only TensorFlow Lite setting. On Android, we used a custom benchmark application implemented in Kotlin and Jetpack Compose. For each dataset, the application loads the corresponding assets, automatically matches them to the appropriate exported model, performs 10 warm-up inferences, and then measures per-image inference time using \texttt{Interpreter.run()} with up to 4 CPU threads and no hardware delegate enabled.
 
-The Android benchmark reports mean latency, median latency, P90 latency, standard deviation, throughput, memory usage, and accuracy on a balanced subset of 400 images per dataset. We emphasize P90 latency in the analysis because it better captures tail behavior than the mean and is therefore more informative for responsiveness-oriented edge deployment.
+Deployment efficiency was evaluated under a unified CPU-only TensorFlow Lite
+setting across all devices, with no hardware delegate enabled and no
+post-training quantization applied. Beyond latency and throughput, both
+benchmarks report memory usage, enabling a direct resource-efficiency
+comparison across the three evaluated platforms.
 
-For Raspberry Pi Zero 2 W, we used a Python benchmark based on \texttt{tflite\_runtime.interpreter}, with fallback to \texttt{tf.lite.Interpreter} when necessary. The same balanced 400-image subsets and the same 10 warm-up runs were used to preserve comparability across devices. All reported edge results therefore correspond to the same float32 TensorFlow Lite CPU-only deployment scenario, without quantization or hardware-specific acceleration.
+On Android, we implemented a custom benchmark application in Kotlin and Jetpack
+Compose. For each dataset, the application loads the corresponding TFLite
+model and assets, performs 10 warm-up inferences, and then measures per-image
+inference time via \texttt{Interpreter.run()} with up to 4 CPU threads. The
+benchmark reports mean latency, P90 latency, standard deviation, throughput,
+accuracy, and memory usage over a balanced subset of 400 images per dataset.
+We emphasize P90 latency throughout the analysis because it captures tail
+behavior more faithfully than the mean, which is more informative for
+latency-sensitive edge applications.
+
+For the Raspberry Pi Zero 2 W, we used a Python benchmark based on
+\texttt{tflite\_runtime.interpreter} (with fallback to
+\texttt{tf.lite.Interpreter}), executed inside Docker to control the execution
+environment. All runs were performed with \texttt{num\_threads=1}. Although
+the device exposes four Cortex-A53 cores, multi-threaded TFLite inference on
+low-power ARM boards incurs synchronization overhead that can negate the
+expected parallelism gain~\cite{tflite_best_practices}. More importantly,
+restricting inference to a single thread places the Pi Zero 2 W in the same
+operating regime as single-core embedded processors (e.g., Cortex-M4/M7
+class), making it a conservative proxy for the most resource-constrained tier
+of edge deployment. The same 400-image balanced subsets and 10 warm-up runs
+used on Android were preserved for comparability.
 
 \subsection{Statistical Testing}
-To assess whether the observed differences were consistent across evaluation conditions, we applied Friedman and Nemenyi analyses following Dem\v{s}ar's recommendations for comparing multiple models over repeated blocks~\cite{demsar2006statistical}. For robustness, each dataset-corruption pair defined one block, and the models were ranked according to corruption error, with lower values indicating better robustness. Across the three datasets and 15 corruption types, this yields 45 robustness blocks.
+To assess whether the observed differences were consistent across evaluation
+conditions, we applied Friedman and Nemenyi analyses following Dem\v{s}ar's
+recommendations for comparing multiple models over repeated
+blocks~\cite{demsar2006statistical}. For robustness, each dataset-corruption
+pair defined one block, and the models were ranked according to corruption
+error, with lower values indicating better robustness. Across the three
+datasets and 15 corruption types, this yields 45 robustness blocks.
 
-For device efficiency, each dataset-device pair defined one block. Models were ranked separately according to P90 latency, where lower is better, and throughput, where higher is better. Considering three datasets and three devices, this yields 9 device-level blocks. This statistical design allows us to test whether the ordering observed in the descriptive results remains stable across corruption types and heterogeneous deployment settings.
-
+For device efficiency, each dataset-device pair defined one block. Models were
+ranked separately according to P90 latency, where lower is better, and
+throughput, where higher is better. Considering three datasets and three
+devices, this yields 9 device-level blocks. This statistical design allows us
+to test whether the ordering observed in the descriptive results remains stable
+across corruption types and heterogeneous deployment settings.
 
 \section{Results}
 \label{sec:results}
@@ -252,7 +344,7 @@ On the Galaxy S24+, MobileNetV3-Small achieved P90 latency between 1.83 and 4.07
 
 When the Raspberry Pi Zero 2 W is included, the device effect becomes more pronounced, as shown in Figures~\ref{fig:edge_latency} and~\ref{fig:edge_throughput}. MobileNetV3-Small remained the only model with clearly interactive latency across all evaluated tasks, ranging from 25.27 to 51.29 ms. MCUNet retained the second-best position, but its latency increased sharply on the single-board computer, reaching 182.42 ms on CIFAR-100 and 465.81 ms on Wake Vision. EfficientNet-B0 incurred the largest runtime penalty, exceeding 290 ms on both CIFAR variants and reaching 544.01 ms on Wake Vision.
 
-The same pattern can be observed in throughput. On the Raspberry Pi, MobileNetV3-Small sustained between 8.72 and 34.67 images/s depending on the dataset, whereas EfficientNet-B0 dropped to 1.68--3.45 images/s. These results reinforce that, under a float32 TensorFlow Lite CPU-only deployment setting, MobileNetV3-Small provides the most favorable runtime profile among the evaluated architectures.
+The Raspberry Pi benchmark was executed with a single thread, one model at a time for each dataset, and inside Docker, which makes the results more directly comparable with the Android measurements while controlling for runtime variability. The same pattern can be observed in throughput. On the Raspberry Pi, MobileNetV3-Small sustained between 8.72 and 34.67 images/s depending on the dataset, whereas EfficientNet-B0 dropped to 1.68--3.45 images/s. Memory usage on the Raspberry Pi was also captured in the updated benchmark, and it followed the same general ordering as runtime: EfficientNet-B0 used the most memory, MobileNetV3-Small the least, and MCUNet remained intermediate in most settings.
 
 \begin{figure}[H]
 \centering
@@ -268,7 +360,7 @@ The same pattern can be observed in throughput. On the Raspberry Pi, MobileNetV3
 \label{fig:edge_throughput}
 \end{figure}
 
-Table~\ref{tab:device_efficiency} consolidates the detailed device-level measurements. Two additional observations are relevant. First, on-device accuracies remained close to the clean-set ranking observed offline, which suggests that float32 TensorFlow Lite export preserved the relative predictive behavior of the models. Second, Android memory consumption generally increased with model size, with EfficientNet-B0 usually requiring the highest memory footprint and MobileNetV3-Small the lowest. Raspberry Pi memory usage was not logged by the benchmark script and is therefore omitted.
+Table~\ref{tab:device_efficiency} consolidates the detailed device-level measurements. Two additional observations are relevant. First, on-device accuracies remained close to the clean-set ranking observed offline, which suggests that float32 TensorFlow Lite export preserved the relative predictive behavior of the models. Second, Android memory consumption generally increased with model size, with EfficientNet-B0 usually requiring the highest memory footprint and MobileNetV3-Small the lowest. On the Raspberry Pi, memory usage was now measured explicitly and was consistently higher for EfficientNet-B0 than for the other models. The Raspberry Pi benchmark was executed in Docker and with a single thread, which improves fairness but also makes the absolute values more representative of a controlled CPU-only deployment than of a fully optimized native setup.
 
 \begin{table}[p]
 \caption{Detailed on-device efficiency results.}
@@ -299,15 +391,15 @@ A14 & CIFAR-100 & EfficientNet-B0 & 39.60 & 20.93 & 82.00 & 50.13 \\
 A14 & Wake Vision & MobileNetV3-Small & 8.85 & 30.91 & 89.50 & 26.83 \\
 A14 & Wake Vision & MCUNet & 33.40 & 18.26 & 84.00 & 19.67 \\
 A14 & Wake Vision & EfficientNet-B0 & 77.15 & 10.73 & 90.50 & 43.79 \\
-RPi Zero 2 W & CIFAR-10 & MobileNetV3-Small & 25.28 & 34.67 & 87.25 & -- \\
-RPi Zero 2 W & CIFAR-10 & MCUNet & 182.06 & 5.40 & 86.25 & -- \\
-RPi Zero 2 W & CIFAR-10 & EfficientNet-B0 & 292.03 & 3.45 & 94.50 & -- \\
-RPi Zero 2 W & CIFAR-100 & MobileNetV3-Small & 25.27 & 34.60 & 72.00 & -- \\
-RPi Zero 2 W & CIFAR-100 & MCUNet & 182.42 & 5.40 & 51.75 & -- \\
-RPi Zero 2 W & CIFAR-100 & EfficientNet-B0 & 293.41 & 3.43 & 81.75 & -- \\
-RPi Zero 2 W & Wake Vision & MobileNetV3-Small & 51.29 & 8.72 & 89.50 & -- \\
-RPi Zero 2 W & Wake Vision & MCUNet & 465.81 & 1.91 & 85.25 & -- \\
-RPi Zero 2 W & Wake Vision & EfficientNet-B0 & 544.01 & 1.68 & 91.00 & -- \\
+RPi Zero 2 W & CIFAR-10 & MobileNetV3-Small & 25.63 & 34.06 & 87.25 & 15.80 \\
+RPi Zero 2 W & CIFAR-10 & MCUNet & 182.70 & 5.39 & 86.25 & 21.10 \\
+RPi Zero 2 W & CIFAR-10 & EfficientNet-B0 & 350.34 & 2.83 & 94.50 & 20.65 \\
+RPi Zero 2 W & CIFAR-100 & MobileNetV3-Small & 25.75 & 33.90 & 72.00 & 16.10 \\
+RPi Zero 2 W & CIFAR-100 & MCUNet & 182.96 & 5.38 & 51.75 & 21.20 \\
+RPi Zero 2 W & CIFAR-100 & EfficientNet-B0 & 350.85 & 2.83 & 81.75 & 20.75 \\
+RPi Zero 2 W & Wake Vision & MobileNetV3-Small & 51.02 & 8.69 & 89.50 & 18.06 \\
+RPi Zero 2 W & Wake Vision & MCUNet & 462.20 & 1.91 & 85.25 & 23.21 \\
+RPi Zero 2 W & Wake Vision & EfficientNet-B0 & 663.06 & 1.39 & 91.00 & 37.44 \\
 \bottomrule
 \end{tabular}%
 }
@@ -480,14 +572,13 @@ These findings should be interpreted within the scope of the present evaluation.
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-This paper presented a cross-benchmark evaluation of lightweight CNNs for edge vision, combining clean accuracy, corruption robustness, model footprint, and on-device efficiency on two Android smartphones and a Raspberry Pi Zero 2 W. Across CIFAR-10, CIFAR-100, and Wake Vision, EfficientNet-B0 consistently achieved the strongest predictive performance, with the highest clean accuracy and the lowest absolute corruption error. In contrast, MobileNetV3-Small consistently provided the best deployment efficiency, combining the smallest storage footprint with the lowest latency and the highest throughput on all evaluated devices.
+This paper presented a cross-benchmark evaluation of lightweight CNNs for edge vision, combining clean accuracy, corruption robustness, model footprint, and on-device efficiency on two Android smartphones and a Raspberry Pi Zero 2 W. Across CIFAR-10, CIFAR-100, and Wake Vision, EfficientNet-B0 consistently achieved the strongest predictive performance, with the highest clean accuracy and the lowest absolute corruption error. In contrast, MobileNetV3-Small consistently provided the best deployment efficiency, combining the smallest storage footprint with the lowest latency, highest throughput, and lowest memory usage on the evaluated devices.
 
-From a practical perspective, the results show that edge-model selection should be treated as a multi-objective decision problem. If predictive performance under common corruptions is the main priority, EfficientNet-B0 is the strongest option among the evaluated architectures. If the goal is a more balanced deployment profile under tight runtime and storage constraints, MobileNetV3-Small offers the most favorable trade-off in the studied float32 TensorFlow Lite CPU-only scenario. Under the same setting, MCUNet did not emerge as the preferred choice in either robustness or runtime efficiency.
+From a practical perspective, the results show that edge-model selection should be treated as a multi-objective decision problem. If predictive performance under common corruptions is the main priority, EfficientNet-B0 is the strongest option among the evaluated architectures. If the goal is a more balanced deployment profile under tight runtime, memory, and storage constraints, MobileNetV3-Small offers the most favorable trade-off in the studied float32 TensorFlow Lite CPU-only scenario. Under the same setting, MCUNet did not emerge as the preferred choice in either robustness or runtime efficiency.
 
-These conclusions should be interpreted in light of the experimental scope. The study intentionally focused on a unified float32 TensorFlow Lite CPU-only deployment setting in order to enable a controlled comparison across heterogeneous devices. As a result, the findings do not necessarily reflect the behavior of the same architectures under quantized inference, hardware delegates, or microcontroller-specific runtimes, which are especially relevant for models such as MCUNet~\cite{lin2020mcunet}.
+These conclusions should be interpreted in light of the experimental scope. The study intentionally focused on a unified float32 TensorFlow Lite CPU-only deployment setting in order to enable a controlled comparison across heterogeneous devices. On the Raspberry Pi Zero 2 W, the benchmark was further restricted to a single thread, each model was executed independently for each dataset, and the runs were also repeated inside Docker to improve experimental fairness and environmental control. As a result, the findings do not necessarily reflect the behavior of the same architectures under quantized inference, hardware delegates, or microcontroller-specific runtimes, which are especially relevant for models such as MCUNet~\cite{lin2020mcunet}.
 
 Future work should extend the analysis in three directions. First, the same comparison should be repeated under quantized inference and hardware-accelerated execution, including GPU, NPU, and vendor-specific delegates, to determine whether the observed ordering persists outside the CPU-only regime. Second, the architectural space should be expanded to include newer lightweight families and training strategies, such as corruption-aware augmentation, robust fine-tuning, pruning, and distillation. Third, the deployment evaluation should incorporate additional systems-level metrics, including energy consumption, thermal behavior, peak memory, and longer-running workloads, so that model selection can be grounded in a broader characterization of real edge operation.
-
 
 \bibliographystyle{splncs04}
 \bibliography{bib}
