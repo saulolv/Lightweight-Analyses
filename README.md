@@ -70,9 +70,11 @@ All models are deployed as **float32 TensorFlow Lite** with **CPU-only** inferen
 |---|---|---|
 | Samsung Galaxy S24+ | 4 | Kotlin benchmark app |
 | Samsung Galaxy A14 | 4 | Kotlin benchmark app |
-| Raspberry Pi Zero 2 W | 1 | Python script, executed inside Docker |
+| Raspberry Pi Zero 2 W | 1 | Python script, executed inside Docker (`--threads 1`) |
 
 Each benchmark run uses 10 warm-up inferences followed by 400 images per dataset (balanced subset). Models are executed independently per dataset on all devices.
+
+> **Note on thread count (Pi Zero 2 W):** All reported results were obtained with `--threads 1`. Multi-threaded TFLite inference on low-power ARM boards (Cortex-A53) incurs synchronization overhead that can negate parallelism gains; restricting to a single thread also places the Pi Zero 2 W in the same operating regime as single-core embedded processors (e.g., Cortex-M4/M7 class), making it a conservative proxy for the most resource-constrained tier of edge deployment.
 
 ---
 
@@ -128,10 +130,12 @@ docker build -t lightweight-pi .
 docker run --rm -it \
   -v /path/to/exports:/app/exports \
   -v /path/to/results:/app/results \
-  lightweight-pi python eval_tflite_multidataset.py
+  lightweight-pi python eval_tflite_multidataset.py --threads 1
 ```
 
-The script runs each model independently per dataset with a single thread, performs 10 warm-up inferences, then evaluates 400 images. Results are written to `results/results_merged.json`.
+> **Important:** `--threads 1` is now the script default and must be preserved to reproduce the paper's reported results. Do not omit or increase this value unless you intentionally want to measure multi-threaded behaviour.
+
+The script runs each model independently per dataset with a single thread, performs 10 warm-up inferences, then evaluates 400 images. Results are written to `results/results_multidataset.json`.
 
 ### 5. Statistical Tests and Figures
 
