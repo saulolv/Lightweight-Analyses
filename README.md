@@ -4,7 +4,7 @@
 
 This repository contains the complete reproducibility package for the paper:
 
-> *"Robustness and Efficiency of Lightweight CNNs for Edge Vision: A Cross-Benchmark Evaluation"*
+> *"Lightweight CNNs for Edge Vision: A Cross-Benchmark Study of Robustness and Efficiency"*
 
 The package covers all stages of the experimental pipeline: model training and export, corruption-robustness evaluation, on-device benchmarking on Android smartphones and Raspberry Pi Zero 2 W, statistical testing, and figure generation.
 
