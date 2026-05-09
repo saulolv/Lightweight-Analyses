@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.pibic.lightweightcnnanalyses"
+    namespace = "com.anonymous.lightweightcnnanalyses"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.pibic.lightweightcnnanalyses"
+        applicationId = "com.anonymous.lightweightcnnanalyses"
         minSdk = 29
         targetSdk = 36
         versionCode = 1

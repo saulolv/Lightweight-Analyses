@@ -16,7 +16,7 @@ The package covers all stages of the experimental pipeline: model training and e
 .
 ├── notebooks/                   # Jupyter notebooks — training, robustness, latency, figures
 │   ├── cifar-10_analyses.ipynb
-│   ├── cifar-100.analyses.ipynb
+│   ├── cifar-100_analyses.ipynb
 │   ├── wake_vision_analyses.ipynb
 │   ├── wake_vision_mobile_export.ipynb
 │   ├── cifar10c_corruption_error.ipynb
@@ -24,8 +24,8 @@ The package covers all stages of the experimental pipeline: model training and e
 │   ├── wake_vision_robustness.ipynb
 │   ├── robustness_results.ipynb
 │   ├── latency_analyses.ipynb
-│   ├── analyses_results.ipynb
-│   └── Statistical_Tests.ipynb
+│   ├── Statistical_Tests.ipynb
+│   └── output/                  # Intermediate notebook outputs
 ├── Raspberry/                   # Raspberry Pi benchmark scripts and Docker environment
 │   ├── eval_tflite_multidataset.py
 │   └── Dockerfile
@@ -33,9 +33,7 @@ The package covers all stages of the experimental pipeline: model training and e
 ├── exports/                     # Exported TFLite model files (.tflite)
 ├── results/                     # Raw benchmark JSON results (Android + Raspberry Pi)
 ├── figures/                     # Generated figures used in the paper
-├── scripts/                     # Utility scripts (anonymization, phrase normalization)
-├── paths.py                     # Centralized path configuration
-└── patch.py                     # MCUNet Keras compatibility patch
+└── paths.py                     # Centralized path configuration
 ```
 
 ---
@@ -86,7 +84,7 @@ Open and run the following notebooks in order for each dataset:
 
 ```
 notebooks/cifar-10_analyses.ipynb        # CIFAR-10 training + TFLite export
-notebooks/cifar-100.analyses.ipynb      # CIFAR-100 training + TFLite export
+notebooks/cifar-100_analyses.ipynb      # CIFAR-100 training + TFLite export
 notebooks/wake_vision_analyses.ipynb    # Wake Vision training
 notebooks/wake_vision_mobile_export.ipynb  # Wake Vision TFLite export
 ```
@@ -135,17 +133,16 @@ docker run --rm -it \
 
 > **Important:** `--threads 1` is now the script default and must be preserved to reproduce the paper's reported results. Do not omit or increase this value unless you intentionally want to measure multi-threaded behaviour.
 
-The script runs each model independently per dataset with a single thread, performs 10 warm-up inferences, then evaluates 400 images. Results are written to `results/results_multidataset.json`.
+The script runs each model independently per dataset with a single thread, performs 10 warm-up inferences, then evaluates 400 images. Results are written to `results/raspberry/results/results_multidataset.json`.
 
 ### 5. Statistical Tests and Figures
 
 ```
 notebooks/Statistical_Tests.ipynb     # Friedman + Nemenyi analyses
 notebooks/latency_analyses.ipynb      # Latency and throughput figures
-notebooks/analyses_results.ipynb      # Combined results figures
 ```
 
-All generated figures are saved to `figures/` in both PDF and PNG formats.
+All generated figures are saved to `figures/` in PDF format.
 
 ---
 
@@ -190,19 +187,33 @@ See `Raspberry/Dockerfile` for the complete environment definition.
 
 ## Results Files
 
-Raw benchmark results are stored in `results/` as JSON files:
+Raw benchmark results are stored in `results/` as JSON files.
 
+### Android
 | File | Source |
 |---|---|
 | `s24p_metrics_*.json` | Samsung Galaxy S24+ benchmark app |
 | `a14_metrics_*.json` | Samsung Galaxy A14 benchmark app |
-| `results_merged.json` | Raspberry Pi Zero 2 W (Docker, 1 thread) |
+
+### Raspberry Pi
+Individual Raspberry Pi benchmark files are located in `results/raspberry/results/`:
+
+| File | Description |
+|---|---|
+| `cifar10.json` | CIFAR-10 benchmark results |
+| `cifar100.json` | CIFAR-100 benchmark results |
+| `wakevision.json` | Wake Vision benchmark results |
+| `cifar10_efficientnet.json` | Additional EfficientNet CIFAR-10 run |
+| `log.txt` | Execution log |
+| `results/raspberry/results/results_merged.json` | Merged Pi Zero 2 W results (Docker, 1 thread) |
+
+Older legacy files (`metrics_*_cpu_500imgs_*.json`) are preserved for reference but are not used in the current analyses.
 
 ---
 
 ## Notes on MCUNet
 
-MCUNet was originally released as a PyTorch model. A compatibility patch (`patch.py`) is included to handle the conversion to Keras before fine-tuning. This patch is applied automatically by the relevant notebooks.
+MCUNet was originally released as a PyTorch model. It is imported from `third_party/mcunet-official/` and the conversion to Keras is handled automatically by the relevant notebooks.
 
 ---
 

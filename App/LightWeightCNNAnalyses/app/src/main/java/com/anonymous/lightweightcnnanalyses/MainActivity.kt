@@ -1,4 +1,4 @@
-package com.pibic.lightweightcnnanalyses
+package com.anonymous.lightweightcnnanalyses
 
 import android.os.Bundle
 import android.os.Handler

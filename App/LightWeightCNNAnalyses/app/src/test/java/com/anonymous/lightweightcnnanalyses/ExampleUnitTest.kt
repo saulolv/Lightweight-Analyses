@@ -1,4 +1,4 @@
-package com.pibic.lightweightcnnanalyses
+package com.anonymous.lightweightcnnanalyses
 
 import org.junit.Test
 
