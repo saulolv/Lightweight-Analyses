@@ -35,6 +35,9 @@ exports/**/tflite_models/
 exports/cifar10/images_png/
 exports/cifar100/images_png/
 
+# Notebook-generated figures (reproducible from notebooks)
+notebooks/output/
+
 # Build / IDE (do not commit Android Studio metadata)
 **/.idea/
 *.iml
@@ -52,3 +55,9 @@ App/**/local.properties
 App/**/assets/*.tflite
 App/**/assets/export_*/
 App/**/assets/**/images_png/
+
+# Temporary scripts used during refactoring
+update_notebooks.py
+fix_notebooks.py
+fix_notebooks2.py
+fix_notebooks3.py
