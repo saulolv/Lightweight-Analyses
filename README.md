@@ -41,7 +41,6 @@ The package covers all stages of the experimental pipeline: model training and e
 ├── requirements.txt                # Pinned Python dependencies
 ├── Dockerfile.notebooks            # Docker environment for notebooks
 ├── Makefile                        # Pipeline automation
-└── AGENTS.md
 ```
 
 ---
