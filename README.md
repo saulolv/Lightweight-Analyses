@@ -1,17 +1,19 @@
-# Reproducibility Package
-
-> **Anonymous submission** — This repository is provided for peer review purposes only. Author identities have been removed in compliance with the double-blind review policy.
-
-This repository contains the complete reproducibility package for the paper:
-
-> *"Lightweight CNNs for Edge Vision: A Cross-Benchmark Study of Robustness and Efficiency"*
-
+# Lightweight CNNs for Edge Vision: A Cross-Benchmark Study of Robustness and Efficiency
+ 
+Reproducibility package for the paper accepted at **ENIAC 2026** (Encontro Nacional de Inteligência Artificial e Computacional, co-located with BRACIS 2026, Cuiabá, MT).
+ 
+**Authors:** Saulo Roberto dos Santos¹, Emanuel Adler Medeiros Pereira², Erick de Andrade Barboza¹, Itallo Patrick Castro Alves da Silva¹, Márcio de Medeiros Ribeiro¹, Baldoino Fonseca dos Santos Neto¹
+ 
+¹ Instituto de Computação, Universidade Federal de Alagoas (UFAL) · ² Centro de Tecnologia, Universidade Federal do Rio Grande do Norte (UFRN)
+ 
+Contact: srs@ic.ufal.br
+ 
 The package covers all stages of the experimental pipeline: model training and export, corruption-robustness evaluation, on-device benchmarking on Android smartphones and Raspberry Pi Zero 2 W, statistical testing, and figure generation.
-
+ 
 ---
-
+ 
 ## Repository Structure
-
+ 
 ```
 .
 ├── src/                            # Shared code (paths, constants)
@@ -42,95 +44,93 @@ The package covers all stages of the experimental pipeline: model training and e
 ├── Dockerfile.notebooks            # Docker environment for notebooks
 ├── Makefile                        # Pipeline automation
 ```
-
+ 
 ---
-
+ 
 ## Experimental Setup
-
+ 
 ### Architectures
-
+ 
 Three lightweight CNN architectures are compared:
-
+ 
 | Model | Backbone | Input size | TFLite size |
 |---|---|---|---|
 | MobileNetV3-Small | ImageNet pretrained | 160×160 (CIFAR), 224×224 (Wake Vision) | ~3.6 MB |
 | EfficientNet-B0 | ImageNet pretrained | 160×160 (CIFAR), 224×224 (Wake Vision) | ~15.3 MB |
 | MCUNet | ImageNet pretrained (converted from PyTorch) | 160×160 (CIFAR), 224×224 (Wake Vision) | ~5.4 MB |
-
+ 
 ### Datasets
-
+ 
 - **CIFAR-10** — 10-class natural image classification (input resized to 160×160)
 - **CIFAR-100** — 100-class natural image classification (input resized to 160×160)
 - **Wake Vision** — binary person detection, TinyML-oriented (`train_quality` / `validation` / `test` splits via `tensorflow_datasets`)
-
 ### Corruption Benchmarks
-
+ 
 Robustness is evaluated using the CIFAR-C protocol: 15 corruption types × 5 severity levels = 75 conditions per dataset. The same corruption taxonomy is applied to Wake Vision to produce a matched benchmark.
-
+ 
 ### Deployment Protocol
-
+ 
 All models are deployed as **float32 TensorFlow Lite** with **CPU-only** inference and **no quantization or hardware delegate**.
-
+ 
 | Device | Threads | Notes |
 |---|---|---|
 | Samsung Galaxy S24+ | 4 | Kotlin benchmark app |
 | Samsung Galaxy A14 | 4 | Kotlin benchmark app |
 | Raspberry Pi Zero 2 W | 1 | Python script, executed inside Docker (`--threads 1`) |
-
+ 
 Each benchmark run uses 10 warm-up inferences followed by 400 images per dataset (balanced subset). Models are executed independently per dataset on all devices.
-
+ 
 > **Note on thread count (Pi Zero 2 W):** All reported results were obtained with `--threads 1`. Multi-threaded TFLite inference on low-power ARM boards (Cortex-A53) incurs synchronization overhead that can negate parallelism gains; restricting to a single thread also places the Pi Zero 2 W in the same operating regime as single-core embedded processors (e.g., Cortex-M4/M7 class), making it a conservative proxy for the most resource-constrained tier of edge deployment.
-
+ 
 ---
-
+ 
 ## Reproducing the Results
-
+ 
 ### 0. Environment Setup
-
+ 
 ```bash
 pip install -r requirements.txt
 ```
-
+ 
 Or use Docker for full reproducibility:
-
+ 
 ```bash
 docker build -f Dockerfile.notebooks -t lightweight-cnn-notebooks .
 docker run --rm -it -p 8888:8888 -v ${PWD}:/app lightweight-cnn-notebooks
 ```
-
+ 
 ### 1. Training and Export (Notebooks)
-
+ 
 Run notebooks in order:
-
+ 
 ```bash
 make train-cifar10        # 01_cifar10_training_export.ipynb
 make train-cifar100       # 02_cifar100_training_export.ipynb
 make train-wakevision    # 03 + 04
 ```
-
+ 
 Or run individually in Jupyter. Exported `.tflite` files are saved to `tflite_models/` (gitignored).
-
+ 
 ### 2. Corruption Robustness
-
+ 
 ```bash
 make corruption-cifar10
 make corruption-cifar100
 make corruption-wakevision
 make robustness           # aggregates mCE and relative mCE
 ```
-
+ 
 ### 3. Android Benchmark
-
+ 
 The Android benchmark application is located in `App/`. It is implemented in **Kotlin with Jetpack Compose** and uses `tflite` interpreter with CPU inference (no delegate, up to 4 threads).
-
+ 
 To reproduce:
 1. Open the `App/` folder in Android Studio.
 2. Build and install on a physical Android device.
 3. Place the exported `.tflite` models and image subsets in the expected asset paths.
 4. Run the benchmark — results are saved as JSON to `results/`.
-
 ### 4. Raspberry Pi Benchmark (Docker)
-
+ 
 ```bash
 make docker-pi
 docker run --rm -it \
@@ -138,27 +138,27 @@ docker run --rm -it \
   -v /path/to/results:/app/results \
   lightweight-pi python eval_tflite_multidataset.py --threads 1
 ```
-
+ 
 > **Important:** `--threads 1` is mandatory to reproduce the paper's reported results.
-
+ 
 ### 5. Statistical Tests and Figures
-
+ 
 ```bash
 make stats    # Friedman + Nemenyi analyses
 make latency  # Latency and throughput figures
 make figures  # All of the above
 ```
-
+ 
 All generated figures are saved to `figures/` in PDF format.
-
+ 
 ---
-
+ 
 ## Dependencies
-
+ 
 ### Python Notebooks
-
+ 
 See `requirements.txt` for pinned versions:
-
+ 
 ```
 tensorflow==2.15.0
 tensorflow-datasets==4.9.4
@@ -170,61 +170,77 @@ scipy==1.14.1
 scikit-posthocs==0.11.2
 Pillow==10.4.0
 ```
-
+ 
 ### Raspberry Pi (Docker)
-
+ 
 The `Raspberry/Dockerfile` installs all required dependencies automatically.
-
+ 
 ---
-
+ 
 ## Results Files
-
+ 
 Raw benchmark results are stored in `results/` as JSON files.
-
+ 
 ### Android
 | File | Source |
 |---|---|
 | `s24p_metrics_*.json` | Samsung Galaxy S24+ benchmark app |
 | `a14_metrics_*.json` | Samsung Galaxy A14 benchmark app |
-
+ 
 ### Raspberry Pi
 Individual benchmark files are in `results/raspberry/results/`:
-
+ 
 | File | Description |
 |---|---|
 | `cifar10.json`, `cifar100.json`, `wakevision.json` | Per-dataset results |
 | `results_merged.json` | Merged Pi Zero 2 W results (Docker, 1 thread) |
-
+ 
 ### Archived
 Legacy results (500-img runs) are in `results/archive/`.
-
+ 
 ---
-
+ 
 ## Path Resolution
-
+ 
 All notebooks and scripts share a single `src.paths.project_root()` function that resolves the repository root from any working directory. Import it with:
-
+ 
 ```python
 import sys
 from pathlib import Path
 sys.path.insert(0, str(next(d for d in [Path.cwd(), *Path.cwd().parents] if (d / "src").is_dir())))
 from src.paths import ROOT
 ```
-
+ 
 The `ROOT` constant provides the project root path; `src.paths` also exports convenience constants such as `RESULTS_DIR`, `FIGURES_DIR`, `KERAS_MODELS_DIR`, etc.
-
+ 
 ---
-
+ 
 ## Notes on MCUNet
-
+ 
 MCUNet was originally released as a PyTorch model. It is imported from `third_party/mcunet-official/` and the conversion to Keras is handled automatically by the relevant notebooks. Clone or submodule this directory before running:
-
+ 
 ```bash
 git submodule add https://github.com/mit-han-lab/mcunet.git third_party/mcunet-official
 ```
-
+ 
 ---
-
+ 
+## Citation
+ 
+If you use this code, models or data, please cite:
+ 
+```bibtex
+@inproceedings{santos2026lightweight,
+  title     = {Lightweight CNNs for Edge Vision: A Cross-Benchmark Study of Robustness and Efficiency},
+  author    = {Santos, Saulo Roberto dos and Pereira, Emanuel Adler Medeiros and Barboza, Erick de Andrade and Silva, Itallo Patrick Castro Alves da and Ribeiro, M{\'a}rcio de Medeiros and Santos Neto, Baldoino Fonseca dos},
+  booktitle = {Anais do Encontro Nacional de Intelig{\^e}ncia Artificial e Computacional (ENIAC)},
+  address   = {Cuiab{\'a}, MT},
+  year      = {2026}
+}
+```
+ 
+---
+ 
 ## License
-
-This repository is made available for peer review purposes. License information will be provided upon paper acceptance.
+ 
+This repository accompanies the paper accepted at ENIAC 2026. License information will be added soon.
